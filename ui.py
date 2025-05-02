@@ -4,6 +4,8 @@ import base64
 import io
 import matplotlib.pyplot as plt
 
+
+
 def setup_page():
     """Apply custom CSS and setup page (without setting page config)"""
     # Apply custom CSS only

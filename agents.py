@@ -12,6 +12,7 @@ import os
 import json
 
 
+
 class ResumeAnalysisAgent:
     def __init__(self, api_key, cutoff_score=75):
         self.api_key = api_key
