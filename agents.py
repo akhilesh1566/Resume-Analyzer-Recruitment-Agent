@@ -11,7 +11,7 @@ import tempfile
 import os
 import json
 
-
+google_api_key="########"
 
 class ResumeAnalysisAgent:
     def __init__(self, api_key, cutoff_score=75):

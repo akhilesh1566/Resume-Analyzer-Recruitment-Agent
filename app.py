@@ -12,7 +12,7 @@ import ui
 from agents import ResumeAnalysisAgent
 import atexit
 
-
+google_api_key="##########"
 
 # Role requirements dictionary
 ROLE_REQUIREMENTS = {
