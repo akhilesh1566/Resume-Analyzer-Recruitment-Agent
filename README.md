@@ -5,6 +5,6 @@
 
 2. pip install - r requirements.txt
 
-3.  run you project 
+3.  run the project 
 
  streamlit run app.py
