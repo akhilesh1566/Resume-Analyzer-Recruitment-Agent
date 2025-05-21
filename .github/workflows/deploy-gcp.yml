@@ -1,0 +1,66 @@
+name: Build and Deploy to GCP Cloud Run
+
+on:
+  push:
+    branches:
+      - main # Or master, or your primary deployment branch
+
+env:
+  GCP_PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
+  GCP_ARTIFACT_REGISTRY_REGION: ${{ secrets.GCP_ARTIFACT_REGISTRY_REGION }}
+  GCP_ARTIFACT_REGISTRY_REPO: ${{ secrets.GCP_ARTIFACT_REGISTRY_REPO }}
+  GCP_CLOUD_RUN_SERVICE_NAME: ${{ secrets.GCP_CLOUD_RUN_SERVICE_NAME }}
+  GCP_CLOUD_RUN_REGION: ${{ secrets.GCP_CLOUD_RUN_REGION }}
+  GCP_SECRET_ID_API_KEY: ${{ secrets.GCP_SECRET_ID_API_KEY }}
+  IMAGE_NAME: resume-analyzer-app # Consistent image name
+
+jobs:
+  build-and-deploy:
+    name: Build and Deploy
+    runs-on: ubuntu-latest
+    # Add permissions for GitHub token to interact with Google Cloud
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Authenticate to Google Cloud
+      id: auth
+      uses: 'google-github-actions/auth@v2'
+      with:
+        credentials_json: '${{ secrets.GCP_SA_KEY }}'
+        # If using Workload Identity Federation (more secure, preferred long term):
+        # workload_identity_provider: 'projects/${{ env.GCP_PROJECT_NUMBER }}/locations/global/workloadIdentityPools/${{ env.WIF_POOL_ID }}/providers/${{ env.WIF_PROVIDER_ID }}'
+        # service_account: '${{ env.SERVICE_ACCOUNT_EMAIL }}'
+
+
+    - name: Set up Cloud SDK
+      uses: 'google-github-actions/setup-gcloud@v2'
+
+    - name: Configure Docker
+      run: gcloud auth configure-docker ${{ env.GCP_ARTIFACT_REGISTRY_REGION }}-docker.pkg.dev --quiet
+
+    - name: Build Docker image
+      env:
+        FULL_IMAGE_PATH: ${{ env.GCP_ARTIFACT_REGISTRY_REGION }}-docker.pkg.dev/${{ env.GCP_PROJECT_ID }}/${{ env.GCP_ARTIFACT_REGISTRY_REPO }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+      run: |
+        docker build -t $FULL_IMAGE_PATH .
+        echo "FULL_IMAGE_PATH=$FULL_IMAGE_PATH" >> $GITHUB_ENV
+
+    - name: Push Docker image
+      run: docker push ${{ env.FULL_IMAGE_PATH }}
+
+    - name: Deploy to Cloud Run
+      run: |
+        gcloud run deploy ${{ env.GCP_CLOUD_RUN_SERVICE_NAME }} \
+          --image ${{ env.FULL_IMAGE_PATH }} \
+          --platform managed \
+          --region ${{ env.GCP_CLOUD_RUN_REGION }} \
+          --allow-unauthenticated \
+          --port 8501 \
+          --set-secrets=GOOGLE_API_KEY=${{ env.GCP_SECRET_ID_API_KEY }} \
+          --project ${{ env.GCP_PROJECT_ID }} \
+          --quiet
