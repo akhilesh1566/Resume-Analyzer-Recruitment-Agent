@@ -12,14 +12,14 @@ import ui
 from agents import ResumeAnalysisAgent
 import atexit
 
-google_api_key="##########"
+google_api_key="AIzaSyBn9IZqNzI8675ZC_yAfoN63GN7pFRUXPw"
 
 # Role requirements dictionary
 ROLE_REQUIREMENTS = {
     "AI/ML Engineer": [
-        "Python", "PyTorch", "TensorFlow", "Machine Learning", "Deep Learning",
-        "MLOps", "Scikit-Learn", "NLP", "Computer Vision", "Reinforcement Learning",
-        "Hugging Face", "Data Engineering", "Feature Engineering", "AutoML"
+        "Python", "LLM", "Machine Learning",
+        "Langchain", "Scikit-Learn", "NLP", "RAG",
+        "Hugging Face", "Feature Engineering", "Generative AI"
     ],
     "Frontend Engineer": [
         "React", "Vue", "Angular", "HTML5", "CSS3", "JavaScript", "TypeScript",

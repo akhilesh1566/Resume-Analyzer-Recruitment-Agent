@@ -4,7 +4,7 @@ import base64
 import io
 import matplotlib.pyplot as plt
 
-google_api_key="#########"
+google_api_key="AIzaSyBn9IZqNzI8675ZC_yAfoN63GN7pFRUXPw"
 
 def setup_page():
     """Apply custom CSS and setup page (without setting page config)"""
@@ -65,7 +65,7 @@ def setup_sidebar():
         
         
         st.subheader("Theme")
-        theme_color = st.color_picker("Accent Color", "#d32f2f")
+        theme_color = st.color_picker("Accent Color", "#1976d2")
         st.markdown(f"""
         <style>
         .stButton button, .main-header, .stTabs [aria-selected="true"] {{
@@ -141,7 +141,7 @@ def create_score_pie_chart(score):
     # Data
     sizes = [score, 100 - score]
     labels = ['', '']  # We'll use annotation instead
-    colors = ["#d32f2f", "#333333"]
+    colors = ["#1976d2", "#333333"]
     explode = (0.05, 0)  # explode the 1st slice (Score)
     
     # Plot
@@ -169,7 +169,7 @@ def create_score_pie_chart(score):
     
     # Add pass/fail indicator
     status = "PASS" if score >= 75 else "FAIL"
-    status_color = "#4CAF50" if score >= 75 else "#d32f2f"
+    status_color = "#4CAF50" if score >= 75 else "#1976d2"
     ax.text(0, -0.15, status, 
             ha='center', va='center', 
             fontsize=14, fontweight='bold', 
@@ -210,7 +210,7 @@ def display_analysis_results(analysis_result):
         if selected:
             st.markdown("<h2 style='color:#4CAF50;'>✅ Congratulations! You have been shortlisted.</h2>", unsafe_allow_html=True)
         else:
-            st.markdown("<h2 style='color:#d32f2f;'>❌ Unfortunately, you were not selected.</h2>", unsafe_allow_html=True)
+            st.markdown("<h2 style='color:#1976d2;'>❌ Unfortunately, you were not selected.</h2>", unsafe_allow_html=True)
         st.write(analysis_result.get('reasoning', ''))
 
     st.markdown('<hr>', unsafe_allow_html=True)
@@ -345,7 +345,7 @@ def resume_qa_section(has_resume, ask_question_func=None):
         with st.spinner("Searching resume and generating response..."):
             response = ask_question_func(user_question)
             
-            st.markdown('<div style="background-color: #111122; padding: 15px; border-radius: 5px; border-left: 5px solid #d32f2f;">', unsafe_allow_html=True)
+            st.markdown('<div style="background-color: #111122; padding: 15px; border-radius: 5px; border-left: 5px solid #1976d2;">', unsafe_allow_html=True)
             st.write(response)
             st.markdown('</div>', unsafe_allow_html=True)
     
