@@ -11,6 +11,8 @@ st.set_page_config(
 import ui
 from agents import ResumeAnalysisAgent
 import atexit
+from dotenv import load_dotenv
+load_dotenv()
 import os
 google_api_key = os.getenv("GOOGLE_API_KEY")
 
