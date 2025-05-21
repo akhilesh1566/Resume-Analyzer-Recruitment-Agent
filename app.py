@@ -11,8 +11,8 @@ st.set_page_config(
 import ui
 from agents import ResumeAnalysisAgent
 import atexit
-
-google_api_key="AIzaSyBn9IZqNzI8675ZC_yAfoN63GN7pFRUXPw"
+import os
+google_api_key = os.getenv("GOOGLE_API_KEY")
 
 # Role requirements dictionary
 ROLE_REQUIREMENTS = {

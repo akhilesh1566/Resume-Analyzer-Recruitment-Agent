@@ -4,7 +4,8 @@ import base64
 import io
 import matplotlib.pyplot as plt
 
-google_api_key="AIzaSyBn9IZqNzI8675ZC_yAfoN63GN7pFRUXPw"
+import os
+google_api_key = os.getenv("GOOGLE_API_KEY")
 
 def setup_page():
     """Apply custom CSS and setup page (without setting page config)"""
