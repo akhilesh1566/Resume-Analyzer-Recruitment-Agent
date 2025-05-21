@@ -1,4 +1,9 @@
 # Resume-Analyzer-Recruitment-Agent
+
+Direct Link for app:
+https://resume-analyzer-service-494223959550.us-central1.run.app/
+
+
  conda create -n resenv python=3.11- y 
 
 1. conda activate resenv
